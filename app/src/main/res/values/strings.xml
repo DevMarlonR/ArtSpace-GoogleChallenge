@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">Art Space</string>
+
+    <string name="description_1">Cristo Redentor</string>
+    <string name="cidade_1">Rio De janeiro</string>
+    <string name="ano_lancamento_1">1922</string>
+
+    <string name="description_2">Beto Carrero World</string>
+    <string name="cidade_2">Santa Catarina</string>
+    <string name="ano_lancamento_2">1991</string>
+
+
+    <string name="description_3">Jardim Botânico</string>
+    <string name="cidade_3">Curitiba</string>
+    <string name="ano_lancamento_3">1991</string>
+
+
+    <string name="description_4">Cataratas do Iguaçu</string>
+    <string name="cidade_4">Parana</string>
+    <string name="ano_lancamento_4">1939</string>
+
 </resources>

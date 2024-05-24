@@ -18,12 +18,17 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -44,7 +49,11 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun ArtSpaceApp(modifier: Modifier = Modifier) {
+fun ArtSpaceApp(
+    modifier: Modifier = Modifier
+) {
+    var imageCount by remember { mutableStateOf(1) }
+
     Column (
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -53,26 +62,157 @@ fun ArtSpaceApp(modifier: Modifier = Modifier) {
             .padding(16.dp)
 
     ) {
-        ImagePrincipal()
-        ImageDescription()
-        NavigationButtons()
+        when (imageCount) {
+            1 -> {
+                ImagePrincipal(
+                    image = R.drawable.cristo_redentor_rj,
+                    description = stringResource(R.string.description_1)
+                )
+                ImageDescription(
+                    artTitle = stringResource(R.string.description_1),
+                    artistName = stringResource(R.string.cidade_1),
+                    artYear = stringResource(R.string.ano_lancamento_1)
+                )
+                Row (
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Button(
+                        onClick = {
+                            imageCount = 4
+                        },
+                        modifier = Modifier
+                            .width(180.dp)
+                            .padding(8.dp)
+                    ) {Text(text = "Previous")}
+                    Button(
+                        onClick = {
+                            imageCount = 2
+                        },
+                        modifier = Modifier
+                            .width(180.dp)
+                            .padding(8.dp)
+                    ) {Text(text = "Next")}
+                }
+            }
+            2 -> {
+                ImagePrincipal(
+                    image = R.drawable.beto_carrero_world,
+                    description = stringResource(R.string.description_2)
+                )
+                ImageDescription(
+                    artTitle = stringResource(R.string.description_2),
+                    artistName = stringResource(R.string.cidade_2),
+                    artYear = stringResource(R.string.ano_lancamento_2)
+                )
+                Row (
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Button(
+                        onClick = {
+                            imageCount = 1
+                        },
+                        modifier = Modifier
+                            .width(180.dp)
+                            .padding(8.dp)
+                    ) {Text(text = "Previous")}
+                    Button(
+                        onClick = {
+                            imageCount = 3
+                        },
+                        modifier = Modifier
+                            .width(180.dp)
+                            .padding(8.dp)
+                    ) {Text(text = "Next")}
+                }
+            }
+            3 -> {
+                ImagePrincipal(
+                    image = R.drawable.jardim_botanico_curitiba,
+                    description = stringResource(R.string.description_3)
+                )
+                ImageDescription(
+                    artTitle = stringResource(R.string.description_3),
+                    artistName = stringResource(R.string.cidade_3),
+                    artYear = stringResource(R.string.ano_lancamento_3)
+                )
+                Row (
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Button(
+                        onClick = {
+                            imageCount = 2
+                        },
+                        modifier = Modifier
+                            .width(180.dp)
+                            .padding(8.dp)
+                    ) {Text(text = "Previous")}
+                    Button(
+                        onClick = {
+                            imageCount = 4
+                        },
+                        modifier = Modifier
+                            .width(180.dp)
+                            .padding(8.dp)
+                    ) {Text(text = "Next")}
+                }
+            }
+            else -> {
+                ImagePrincipal(
+                    image = R.drawable.cataratas_do_iguacu,
+                    description = stringResource(R.string.description_4).toString()
+                )
+                ImageDescription(
+                    artTitle = stringResource(R.string.description_4),
+                    artistName = stringResource(R.string.cidade_4),
+                    artYear = stringResource(R.string.ano_lancamento_4)
+                )
+                Row (
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Button(
+                        onClick = {
+                            imageCount = 3
+                        },
+                        modifier = Modifier
+                            .width(180.dp)
+                            .padding(8.dp)
+                    ) {Text(text = "Previous")}
+                    Button(
+                        onClick = {
+                            imageCount = 1
+                        },
+                        modifier = Modifier
+                            .width(180.dp)
+                            .padding(8.dp)
+                    ) {Text(text = "Next")}
+                }
+            }
+
+        }
+
     }
 }
 
 @Composable
 fun ImagePrincipal(
-    image: Int = R.drawable.cristo_redentor_rj,
-    modifier: Modifier = Modifier) {
+    image: Int,
+    description: String = "",
+    modifier: Modifier = Modifier
+) {
         Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier
-                .fillMaxWidth()
                 .height(500.dp)
+                .width(640.dp)
                 .shadow(2.dp, spotColor = Color.DarkGray)
         ) {
             Image(
                 painter = painterResource(image),
-                contentDescription = null,
+                contentDescription = description,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.padding(16.dp)
             )
@@ -80,14 +220,16 @@ fun ImagePrincipal(
 }
 
 @Composable
-fun ImageDescription(modifier: Modifier = Modifier) {
-    val artTitle = "Still Life of Blue Rose and"
-    val artistName = "Njoe"
-    val artYear = "2022"
+fun ImageDescription(
+    artTitle: String,
+    artistName: String,
+    artYear: String,
+    modifier: Modifier = Modifier
+) {
     Column (
         modifier = Modifier
             .background(color = Color.LightGray)
-            .fillMaxWidth()
+            .width(640.dp)
             .padding(8.dp),
     ) {
         Text(
@@ -112,23 +254,7 @@ fun ImageDescription(modifier: Modifier = Modifier) {
 @Composable
 fun NavigationButtons(
     modifier: Modifier = Modifier) {
-    Row {
-        Button(
-            onClick = {
 
-            },
-            modifier = Modifier
-                .width(180.dp)
-                .padding(8.dp)
-        ) {Text(text = "Previous")}
-        Button(onClick = {
-
-        },
-            modifier = Modifier
-                .width(180.dp)
-                .padding(8.dp)
-        ) {Text(text = "Next")}
-    }
 }
 
 @Preview(showBackground = true)
